@@ -22,10 +22,8 @@ export default async function Home() {
                         <AuthButton />
                     </div>
                 </nav>
-                <div className="flex-1 flex flex-col gap-20 max-w-5xl p-5">
-                    <main className="max-h-96 overflow-scroll border border-white rounded-xl p-4">
-                        <pre>{JSON.stringify(switches, null, 2)}</pre>
-                    </main>
+                <div className="overflow-scroll border border-white rounded-xl p-4">
+                    <pre>{JSON.stringify(switches, null, 2)}</pre>
                 </div>
 
                 <footer className="w-full flex items-center justify-center border-t mx-auto text-center text-xs gap-8 py-16">
