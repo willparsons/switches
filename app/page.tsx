@@ -1,10 +1,13 @@
 import { DeployButton } from "@/components/deploy-button";
 import { AuthButton } from "@/components/auth-button";
-import { Hero } from "@/components/hero";
 import { ThemeSwitcher } from "@/components/theme-switcher";
 import Link from "next/link";
+import { createClient } from "@/lib/supabase/server";
 
-export default function Home() {
+export default async function Home() {
+    const supabase = await createClient();
+    const { data: switches } = await supabase.from("switches").select().limit(20);
+
     return (
         <main className="min-h-screen flex flex-col items-center">
             <div className="flex-1 w-full flex flex-col gap-20 items-center">
@@ -20,9 +23,8 @@ export default function Home() {
                     </div>
                 </nav>
                 <div className="flex-1 flex flex-col gap-20 max-w-5xl p-5">
-                    <Hero />
-                    <main className="flex-1 flex flex-col gap-6 px-4">
-                        <h2 className="font-medium text-xl mb-4">Next steps</h2>
+                    <main className="max-h-96 overflow-scroll border border-white rounded-xl p-4">
+                        <pre>{JSON.stringify(switches, null, 2)}</pre>
                     </main>
                 </div>
 
