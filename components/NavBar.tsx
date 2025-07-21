@@ -15,7 +15,7 @@ export function NavBar({ searchTerm, onChangeSearchTerm }: NavBarProps) {
                 <div className="flex items-center justify-between">
                     <div className="flex items-center space-x-4">
                         <Link href="/" className="text-2xl font-bold">
-                            SwitchHub
+                            Switches
                         </Link>
                         <nav className="hidden md:flex space-x-6">
                             <Link href="/" className="font-medium">
