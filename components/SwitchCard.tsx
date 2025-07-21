@@ -3,20 +3,28 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
 
-import type { Database } from "@/database.types";
-
-type Switch = Database["public"]["Tables"]["switches"]["Row"];
+import { Switch } from "@/lib/types";
 
 export type SwitchCardProps = {
-    name: Switch["Switch Name"];
-    type: Switch["Type"];
-    actuationForce: Switch["Act. Weight"];
-    travelDistance: Switch["Total Travel Dist."];
+    sw: Switch;
 };
 
-export function SwitchCard({ name, type, actuationForce, travelDistance }: SwitchCardProps) {
+function getTypeColor(type: Switch["Type"]) {
+    switch (type) {
+        case "Linear":
+            return "bg-red-100 text-red-800";
+        case "Tactile":
+            return "bg-blue-100 text-blue-800";
+        case "Clicky":
+            return "bg-green-100 text-green-800";
+        default:
+            return "bg-gray-100 text-gray-800";
+    }
+}
+
+export function SwitchCard({ sw }: SwitchCardProps) {
     return (
-        <Card className="w-full max-w-sm">
+        <Card>
             <CardHeader>
                 <Image
                     src="https://preview-keyboard-switch-catalogue-kzmk05fydn8xdaqqzjp0.vusercontent.net/placeholder.svg"
@@ -27,17 +35,19 @@ export function SwitchCard({ name, type, actuationForce, travelDistance }: Switc
                 />
 
                 <div className="flex flex-row justify-between">
-                    <CardTitle>{name}</CardTitle>
-                    <Badge variant="default">{type}</Badge>
+                    <CardTitle>{sw["Switch Name"]}</CardTitle>
+                    <Badge variant="default" className={getTypeColor(sw["Type"])}>
+                        {sw["Type"]}
+                    </Badge>
                 </div>
             </CardHeader>
             <CardContent>
                 <div className="flex flex-row justify-between mt-4">
                     <p className="font-bold">
-                        Force: <span className="font-normal">{actuationForce}</span>
+                        Force: <span className="font-normal">{sw["Act. Weight"]}</span>
                     </p>
                     <p className="font-bold">
-                        Travel: <span className="font-normal">{travelDistance}</span>
+                        Travel: <span className="font-normal">{sw["Total Travel Dist."]}</span>
                     </p>
                 </div>
             </CardContent>
