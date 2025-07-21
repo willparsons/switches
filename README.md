@@ -1,6 +1,8 @@
-<a href="https://unrivaled-speculoos-e0a422.netlify.app">
-  <h1 align="center">Switch Catalogue</h1>
-</a>
+<h1 align="center">
+    <a href="https://unrivaled-speculoos-e0a422.netlify.app">
+        Switch Catalogue
+    </a>
+</h1>
 
 <p align="center">
     Find your switch, today.
@@ -8,7 +10,7 @@
 
 <p align="center">
   <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a> ·
+  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a>
 </p>
 
 <br/>
