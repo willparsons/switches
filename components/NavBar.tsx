@@ -21,12 +21,8 @@ export function NavBar({ searchTerm, onChangeSearchTerm }: NavBarProps) {
                             <Link href="/" className="font-medium">
                                 Catalogue
                             </Link>
-                            <Link href="#" className="text-muted-foreground hover:text-foreground">
-                                Brands
-                            </Link>
-                            <Link href="#" className="text-muted-foreground hover:text-foreground">
-                                Guides
-                            </Link>
+                            <p className="text-muted-foreground">Brands</p>
+                            <p className="text-muted-foreground">Guides</p>
                         </nav>
                     </div>
                     <div className="flex items-center space-x-4">
