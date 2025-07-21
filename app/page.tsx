@@ -142,7 +142,7 @@ export default function Home() {
 
                     <div className="flex-1">
                         <div className="flex items-center justify-between mb-6">
-                            <h1 className="text-3xl font-bold">Mechanical Switches</h1>
+                            <h1 className="text-3xl font-bold">Results</h1>
                             <p className="text-muted-foreground">{filteredSwitches.length} switches found</p>
                         </div>
 
