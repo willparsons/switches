@@ -8,11 +8,6 @@
     Find your switch, today.
 </p>
 
-<p align="center">
-  <a href="#demo"><strong>Demo</strong></a> ·
-  <a href="#clone-and-run-locally"><strong>Clone and run locally</strong></a>
-</p>
-
 <br/>
 
 ## Demo
