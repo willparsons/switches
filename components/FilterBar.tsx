@@ -8,7 +8,29 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/
 import { Filter } from "lucide-react";
 import { useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { TypesNoUnknown } from "@/lib/types";
+import { Switch, SwitchTypes } from "@/lib/types";
+
+// TODO: source this properly
+const Brands = ["Gateron", "Durock"] as const;
+type BrandsT = (typeof Brands)[number];
+
+function populateRecord(searchParams: ReturnType<typeof useSearchParams>): Record<BrandsT, boolean> {
+    const brandsInParams = searchParams.getAll("brands");
+
+    return Object.fromEntries(Brands.map((brand) => [brand, brandsInParams.includes(brand)])) as Record<
+        BrandsT,
+        boolean
+    >;
+}
+
+function populateTypesRecord(searchParams: ReturnType<typeof useSearchParams>): Record<Switch["Type"], boolean> {
+    const typesInParams = searchParams.getAll("types");
+
+    return Object.fromEntries(SwitchTypes.map((type) => [type, typesInParams.includes(type)])) as Record<
+        Switch["Type"],
+        boolean
+    >;
+}
 
 export function FilterBar() {
     // TODO: This has no influence
@@ -20,10 +42,28 @@ export function FilterBar() {
     const pathname = usePathname();
     const { replace } = useRouter();
 
-    // TODO: source this properly
-    const brands = ["Gateron", "Durock"];
+    const [brandChecked, setBrandsChecked] = useState(populateRecord(searchParams));
+    const [typesChecked, setTypesChecked] = useState(populateTypesRecord(searchParams));
 
-    const handleBrandChange = (brand: string, checked: boolean) => {
+    const params = new URLSearchParams(searchParams);
+
+    const toggleBrandChecked = (brand: BrandsT) => {
+        setBrandsChecked((prev) => ({
+            ...prev,
+            [brand]: !prev[brand],
+        }));
+    };
+
+    const toggleTypeChecked = (type: Switch["Type"]) => {
+        setTypesChecked((prev) => ({
+            ...prev,
+            [type]: !prev[type],
+        }));
+    };
+
+    const handleBrandChange = (brand: BrandsT, checked: boolean) => {
+        toggleBrandChecked(brand);
+
         if (checked) {
             params.append("brands", brand);
         } else {
@@ -33,9 +73,9 @@ export function FilterBar() {
         replace(`${pathname}?${params.toString()}`);
     };
 
-    const params = new URLSearchParams(searchParams);
+    const handleTypeChange = (type: Switch["Type"], checked: boolean) => {
+        toggleTypeChecked(type);
 
-    const handleTypeChange = (type: string, checked: boolean) => {
         if (checked) {
             params.append("types", type);
         } else {
@@ -74,11 +114,11 @@ export function FilterBar() {
                         <AccordionTrigger>Brands</AccordionTrigger>
                         <AccordionContent>
                             <div className="space-y-2">
-                                {brands.map((brand) => (
+                                {Brands.map((brand) => (
                                     <div key={brand} className="flex items-center space-x-2">
                                         <Checkbox
                                             id={`brand-${brand}`}
-                                            checked={searchParams.getAll("brands").includes(brand)}
+                                            checked={brandChecked[brand]}
                                             onCheckedChange={(checked) => handleBrandChange(brand, checked as boolean)}
                                         />
                                         <Label htmlFor={`brand-${brand}`} className="text-sm">
@@ -94,11 +134,11 @@ export function FilterBar() {
                         <AccordionTrigger>Switch Types</AccordionTrigger>
                         <AccordionContent>
                             <div className="space-y-2">
-                                {TypesNoUnknown.map((type) => (
+                                {SwitchTypes.map((type) => (
                                     <div key={type} className="flex items-center space-x-2">
                                         <Checkbox
                                             id={`type-${type}`}
-                                            checked={params.getAll("types").includes(type)}
+                                            checked={typesChecked[type]}
                                             onCheckedChange={(checked) => handleTypeChange(type, checked as boolean)}
                                         />
                                         <Label htmlFor={`type-${type}`} className="text-sm">
